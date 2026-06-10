@@ -1,0 +1,16 @@
+# Jazz LSTM — PyTorch version
+# Python 3.11
+#
+# Install via: ./setup_pt.sh
+
+torch==2.3.1
+torchaudio==2.3.1
+numpy==1.26.4
+matplotlib==3.9.0
+music21==9.1.0
+mido==1.3.2
+pydub==0.25.1
+ipython==8.25.0
+ipykernel==6.29.5
+jupyter==1.0.0
+notebook==7.2.2
