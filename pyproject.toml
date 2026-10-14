@@ -1,0 +1,22 @@
+[project]
+name = "jazz-lstm-pytorch"
+version = "0.1.0"
+description = "Jazz LSTM — PyTorch version (notebook + helpers)"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "torch==2.3.1",
+    "torchaudio==2.3.1",
+    "numpy==1.26.4",
+    "matplotlib==3.9.0",
+    "music21==9.1.0",
+    "mido==1.3.2",
+    "pydub==0.25.1",
+    "ipython==8.25.0",
+    "ipykernel==6.29.5",
+    "jupyter==1.0.0",
+    "notebook==7.2.2",
+]
+
+[tool.uv]
+# Not a package: `uv sync` installs the pinned dependencies only.
+package = false

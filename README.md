@@ -17,8 +17,7 @@ GPU acceleration is used automatically when available (Apple Silicon, CUDA, or C
 ## Requirements
 
 - macOS (Apple Silicon or Intel), Linux, or Windows
-- Python 3.11
-- [Homebrew](https://brew.sh) (macOS)
+- [uv](https://docs.astral.sh/uv/) — installs the pinned Python 3.11 and all dependencies
 
 ---
 
@@ -30,11 +29,11 @@ chmod +x setup_pt.sh
 ./setup_pt.sh
 ```
 
-The script:
-1. Creates `.venv/` with Python 3.11
-2. Installs PyTorch 2.3.1 + torchaudio
-3. Installs all pinned dependencies (numpy, matplotlib, music21, mido, pydub, jupyter)
-4. Registers a Jupyter kernel named **"Jazz LSTM – PyTorch"**
+The script runs `uv sync` (Setup: `uv sync`), which:
+1. Creates `.venv/` with Python 3.11 (from `.python-version`)
+2. Installs PyTorch 2.3.1 + torchaudio and all pinned dependencies from `uv.lock` (numpy, matplotlib, music21, mido, pydub, jupyter)
+
+Then it registers a Jupyter kernel named **"Jazz LSTM – PyTorch"**.
 
 ---
 
@@ -60,7 +59,8 @@ Generated MIDI is written to `output/my_music.midi`. Audio rendering requires [M
 jazz-lstm-pytorch/
 ├── Jazz_LSTM_PT.ipynb     # Main notebook
 ├── setup_pt.sh            # One-command environment setup
-├── requirements.txt       # Pinned dependencies
+├── pyproject.toml         # Pinned dependencies (uv)
+├── uv.lock                # Locked dependency set
 ├── data_utils.py          # Dataset loading, preprocessing, predict_and_sample
 ├── grammar.py             # Music grammar rules (chord/note abstractions)
 ├── music_utils.py         # music21 MIDI utilities (zero TF dependency)
