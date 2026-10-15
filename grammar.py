@@ -10,6 +10,8 @@ https://github.com/evancchow/jazzml,with permission.
 from collections import OrderedDict, defaultdict
 from itertools import groupby
 from music21 import *
+# Typed home of Voice/Part/Stream: music21.stream's re-exports are invisible to type checkers.
+from music21.stream import base as stream
 import copy, random, pdb
 
 #from preprocess import *
@@ -256,8 +258,9 @@ def unparse_grammar(m1_grammar, m1_chords):
                 insertNote = __generate_approach_tone(lastChord)
 
             # Update the stream of generated notes
+            assert insertNote is not None, "tone generators always return a Note"
             insertNote.quarterLength = float(terms[1])
-            if insertNote.octave < 4:
+            if insertNote.octave is not None and insertNote.octave < 4:
                 insertNote.octave = 4
             m1_elements.insert(currOffset, insertNote)
             prevElement = insertNote
@@ -271,6 +274,7 @@ def unparse_grammar(m1_grammar, m1_chords):
                 upperInterval, lowerInterval = interval1, interval2
             else:
                 upperInterval, lowerInterval = interval2, interval1
+            assert prevElement is not None, "< > increments only follow a first note"
             lowPitch = interval.transposePitch(prevElement.pitch, lowerInterval)
             highPitch = interval.transposePitch(prevElement.pitch, upperInterval)
             numNotes = int(highPitch.ps - lowPitch.ps + 1) # for range(s, e)
@@ -293,7 +297,8 @@ def unparse_grammar(m1_grammar, m1_chords):
                     insertNote = relevantChordTones[0]
                 else: # if no choices, set to prev element +-1 whole step
                     insertNote = prevElement.transpose(random.choice([-2,2]))
-                if insertNote.octave < 3:
+                assert insertNote is not None, "transpose() returns a Note when not in place"
+                if insertNote.octave is not None and insertNote.octave < 3:
                     insertNote.octave = 3
                 insertNote.quarterLength = float(terms[1])
                 m1_elements.insert(currOffset, insertNote)
@@ -312,7 +317,8 @@ def unparse_grammar(m1_grammar, m1_chords):
                     insertNote = relevantScaleTones[0]
                 else: # if no choices, set to prev element +-1 whole step
                     insertNote = prevElement.transpose(random.choice([-2,2]))
-                if insertNote.octave < 3:
+                assert insertNote is not None, "transpose() returns a Note when not in place"
+                if insertNote.octave is not None and insertNote.octave < 3:
                     insertNote.octave = 3
                 insertNote.quarterLength = float(terms[1])
                 m1_elements.insert(currOffset, insertNote)
@@ -332,7 +338,8 @@ def unparse_grammar(m1_grammar, m1_chords):
                     insertNote = relevantApproachTones[0]
                 else: # if no choices, set to prev element +-1 whole step
                     insertNote = prevElement.transpose(random.choice([-2,2]))
-                if insertNote.octave < 3:
+                assert insertNote is not None, "transpose() returns a Note when not in place"
+                if insertNote.octave is not None and insertNote.octave < 3:
                     insertNote.octave = 3
                 insertNote.quarterLength = float(terms[1])
                 m1_elements.insert(currOffset, insertNote)

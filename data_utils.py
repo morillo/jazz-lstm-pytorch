@@ -1,6 +1,9 @@
-from music_utils import * 
-from preprocess import * 
+from music_utils import *
+from preprocess import *
 from collections import defaultdict
+# Explicit, typed imports: music21's package re-exports are not visible to type checkers.
+from music21.midi import translate as midi_translate
+from music21.stream import base as stream
 from mido import MidiFile
 from pydub import AudioSegment
 from pydub.generators import Sine
@@ -95,7 +98,7 @@ def generate_music(inference_model, indices_tones, chords, diversity = 0.5):
     out_stream.insert(0.0, tempo.MetronomeMark(number=130))
 
     # Save audio stream to fine
-    mf = midi.translate.streamToMidiFile(out_stream)
+    mf = midi_translate.streamToMidiFile(out_stream)
     mf.open("output/my_music.midi", 'wb')
     mf.write()
     print("Your generated music is saved in output/my_music.midi")
@@ -141,7 +144,7 @@ def ticks_to_ms(ticks, tempo, mid):
 
 def mid2wav(file):
     mid = MidiFile(file)
-    output = AudioSegment.silent(mid.length * 1000.0)
+    output = AudioSegment.silent(int(mid.length * 1000.0))
 
     tempo = 130 # bpm
 
