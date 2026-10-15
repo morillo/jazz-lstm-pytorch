@@ -18,6 +18,12 @@ from grammar import *
 from grammar import parse_melody
 from music_utils import *
 
+# Typed homes of Voice/Part and TimeSignature: music21's package re-exports are
+# invisible to type checkers. Must come after the wildcard imports above, which
+# would otherwise rebind these names.
+from music21.meter import base as meter
+from music21.stream import base as stream
+
 #----------------------------HELPER FUNCTIONS----------------------------------#
 
 ''' Helper function to parse a MIDI file into its measures and chords '''

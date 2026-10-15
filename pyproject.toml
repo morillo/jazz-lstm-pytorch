@@ -15,8 +15,14 @@ dependencies = [
     "ipykernel==6.29.5",
     "jupyter==1.0.0",
     "notebook==7.2.2",
+    "termcolor>=3.3.0",
 ]
 
 [tool.uv]
 # Not a package: `uv sync` installs the pinned dependencies only.
 package = false
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.414",
+]
